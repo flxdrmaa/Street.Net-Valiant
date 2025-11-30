@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Street.NET - Penyangkalan</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2084454135210602"
+     crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-2084454135210602">
+  <style>
+  :root {
+    --default-zone-logo-size: clamp(80px, 15vw, 100px);
+    --neon-cyan: #00ffcc;
+    --neon-green: #00ff00;
+    --neon-purple: #800080;
+  }
+
+  body {
+    margin: 0;
+    background: #000;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .container {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .background-overlay {
+    position: fixed;
+    inset: 0;
+    background: url('https://i.imgur.com/ne9vTRM.png') no-repeat center center;
+    background-size: cover;
+    opacity: 0.80;
+    z-index: 0;
+    pointer-events: none;
+    width: 100vw;
+    height: 100vh;
+    transition: filter 0.3s ease;
+  }
+
+  .background-overlay.blur {
+    filter: blur(3px);
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: clamp(40px, 12vw, 48px);
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--neon-cyan);
+    font-size: clamp(11px, 3.5vw, 14px);
+    padding: clamp(8px, 2.5vw, 10px) clamp(10px, 3vw, 15px);
+    font-weight: bold;
+    letter-spacing: 1px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  .topbar .purple { color: var(--neon-purple); }
+  .topbar .green { color: var(--neon-green); }
+
+  .topbar h2 {
+    margin: 0;
+    flex-grow: 1;
+    text-align: left;
+    font-size: clamp(14px, 4vw, 16px);
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(3px, 1vw, 4px);
+    width: clamp(28px, 8vw, 32px);
+    height: clamp(18px, 5vw, 20px);
+    cursor: pointer;
+    z-index: 101;
+    margin-right: clamp(8px, 2vw, 12px);
+    flex-shrink: 0;
+    touch-action: manipulation;
+  }
+
+  .hamburger span {
+    width: 100%;
+    height: clamp(2px, 0.6vw, 3px);
+    background: var(--neon-cyan);
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(clamp(4px, 1.2vw, 5px), clamp(4px, 1.2vw, 5px));
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(clamp(6px, 1.8vw, 7px), clamp(-6px, -1.8vw, -7px));
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: clamp(40px, 12vw, 48px);
+    right: 0;
+    width: clamp(200px, 65vw, 240px);
+    background: rgba(0, 0, 0, 0.9);
+    padding: clamp(15px, 4vw, 20px);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 99;
+    border-left: 2px solid #1b3d39;
+    box-shadow: -5px 0 10px rgba(0, 255, 200, 0.2);
+  }
+
+  .nav-menu.active {
+    transform: translateX(0);
+  }
+
+  .nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav-menu li {
+    margin: clamp(12px, 3vw, 15px) 0;
+  }
+
+  .nav-menu a {
+    color: var(--neon-cyan);
+    text-decoration: none;
+    font-size: clamp(13px, 3.5vw, 15px);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    display: block;
+    padding: clamp(5px, 1.5vw, 8px);
+    touch-action: manipulation;
+  }
+
+  .nav-menu a:hover {
+    color: var(--neon-green);
+    text-shadow: 0 0 6px var(--neon-green);
+  }
+
+  .content {
+    position: relative;
+    width: clamp(300px, 90vw, 780px);
+    margin: clamp(15px, 5vw, 40px) auto;
+    padding: clamp(15px, 4vw, 25px);
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid rgba(0, 255, 200, 0.3);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);
+    z-index: 2;
+    color: #ddd;
+    font-size: clamp(14px, 3.8vw, 16px);
+    line-height: 1.7;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .content h1 {
+    color: var(--neon-cyan);
+    font-size: clamp(20px, 5.5vw, 26px);
+    margin: 0 0 clamp(12px, 3vw, 18px);
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0, 255, 200, 0.6);
+  }
+
+  .content p {
+    margin: clamp(8px, 2vw, 12px) 0;
+    color: #e0e0e0;
+  }
+
+  .content a {
+    color: var(--neon-cyan);
+    text-decoration: none;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+  }
+
+  .content a:hover {
+    color: var(--neon-green);
+    text-shadow: 0 0 6px var(--neon-green);
+  }
+
+  @media (max-width: 1024px) {
+    .content {
+      width: clamp(280px, 92vw, 720px);
+      margin: clamp(10px, 4vw, 30px) auto;
+      padding: clamp(12px, 3.5vw, 20px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content {
+      width: clamp(260px, 94vw, 700px);
+      margin: clamp(8px, 3vw, 20px) auto;
+      padding: clamp(10px, 3vw, 15px);
+    }
+
+    .hamburger {
+      margin-right: clamp(6px, 1.5vw, 8px);
+    }
+
+    .nav-menu {
+      width: clamp(180px, 70vw, 220px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .topbar {
+      font-size: clamp(10px, 3vw, 12px);
+      padding: clamp(6px, 2vw, 8px) clamp(8px, 2.5vw, 10px);
+    }
+
+    .topbar h2 {
+      font-size: clamp(12px, 3.5vw, 14px);
+    }
+
+    .content {
+      width: clamp(240px, 96vw, 460px);
+      border-radius: 8px;
+    }
+
+    .content h1 {
+      font-size: clamp(18px, 5vw, 22px);
+    }
+
+    .content p {
+      font-size: clamp(13px, 3.5vw, 14px);
+    }
+
+    .nav-menu {
+      width: clamp(160px, 80vw, 200px);
+    }
+
+    .hamburger {
+      margin-right: clamp(4px, 1vw, 6px);
+    }
+  }
+
+  @media (max-width: 360px) {
+    .content {
+      width: clamp(220px, 98vw, 340px);
+      padding: clamp(8px, 2.5vw, 12px);
+    }
+
+    .topbar {
+      height: clamp(36px, 11vw, 44px);
+    }
+
+    .nav-menu {
+      width: clamp(140px, 85vw, 180px);
+      padding: clamp(10px, 3vw, 15px);
+    }
+  }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="background-overlay"></div>
+
+    <div class="topbar">
+      <h2><a href="index.html" style="color: inherit; text-decoration: none;">Selamat Datang di <span class="purple">Street</span>.<span class="green">NET</span></a></h2>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <nav class="nav-menu" id="nav-menu">
+      <ul>
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="about.html">Tentang</a></li>
+        <li><a href="contact.html">Kontak</a></li>
+        <li><a href="privacy.html">Privasi</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+      </ul>
+    </nav>
+
+    <div class="content">
+  <h1>Penyangkalan</h1>
+  <p>
+    Street.NET menyediakan konten semata-mata untuk tujuan hiburan dan informasi umum. 
+    Kami berusaha memberikan informasi yang akurat dan terkini, namun tidak menjamin 
+    kelengkapan, keandalan, atau ketepatan data yang disajikan.
+  </p>
+
+  <p>
+    Semua aktivitas balapan di situs ini sepenuhnya bersifat fiktif dan hanya ditujukan 
+    untuk pengalaman virtual. Kami tidak mendorong, mendukung, ataupun membenarkan 
+    kegiatan balapan di dunia nyata yang melanggar hukum. Pengguna diharapkan untuk 
+    selalu mematuhi peraturan dan undang-undang yang berlaku terkait penggunaan 
+    kendaraan di wilayah masing-masing.
+  </p>
+
+  <p>
+    Street.NET tidak bertanggung jawab atas kerugian langsung, tidak langsung, insidental, 
+    maupun konsekuensial yang timbul akibat penggunaan atau ketidakmampuan menggunakan 
+    situs ini, termasuk namun tidak terbatas pada kesalahan teknis, gangguan akses, 
+    atau ketergantungan pada konten yang ditampilkan.
+  </p>
+
+  <p>
+    Situs ini dapat berisi tautan eksternal dan data dari layanan pihak ketiga, 
+    termasuk Google Sheets. Tautan dan konten pihak ketiga tersebut disediakan untuk 
+    kenyamanan pengguna dan tidak mencerminkan dukungan atau tanggung jawab dari Street.NET.
+  </p>
+
+  <p>
+    Isi penyangkalan ini dapat diperbarui sewaktu-waktu tanpa pemberitahuan sebelumnya. 
+    Dengan mengakses dan menggunakan situs ini, Anda menyetujui bahwa segala bentuk 
+    penggunaan konten adalah sepenuhnya tanggung jawab pribadi Anda.
+  </p>
+</div>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2084454135210602"
+     crossorigin="anonymous"></script>
+<!-- Iklan 1 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2084454135210602"
+     data-ad-slot="2914937679"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const backgroundOverlay = document.querySelector('.background-overlay');
+
+    hamburger.addEventListener('click', (e) => {
+      e.preventDefault();
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      backgroundOverlay.classList.toggle('blur');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        backgroundOverlay.classList.remove('blur');
+      }
+    });
+  </script>
+</body>
+</html>
